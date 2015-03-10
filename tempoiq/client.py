@@ -3,9 +3,7 @@ import urlparse
 import urllib
 from protocol.encoder import WriteEncoder, CreateEncoder, ReadEncoder
 from protocol.query.builder import QueryBuilder
-from response import Response, SensorPointsResponse, DeleteDatapointsResponse
-from response import StreamResponse, AlertListResponse
-from response import MonitoringResponse, DeviceResponse, ResponseException
+from response import *
 from endpoint import media_type, media_types
 
 
@@ -219,4 +217,4 @@ class Client(object):
         default = self.write_encoder.default
         resp = self.endpoint.post(url, json.dumps(write_request,
                                                   default=default))
-        return Response(resp, self.endpoint)
+        return WriteResponse(resp, self.endpoint)
