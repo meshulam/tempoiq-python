@@ -97,12 +97,12 @@ class WriteResponse(Response):
             for k in self.data:
                 if self.data[k]['success'] is False:
                     failures += 1
-                if failures == devices:
-                    status = FAILURE
-                elif failures > 0:
-                    status = PARTIAL
-                else:
-                    status = SUCCESS
+            if failures == devices:
+                status = FAILURE
+            elif failures > 0:
+                status = PARTIAL
+            else:
+                status = SUCCESS
             self._cached_status = status
             return status
 
