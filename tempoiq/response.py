@@ -69,6 +69,67 @@ class Response(object):
         self.data = None
 
 
+class WriteResponse(Response):
+    def __init__(self, resp, session):
+        self.resp = resp
+        self.session = session
+        self.status = resp.status_code
+        self.status_code = self.status
+        self.reason = resp.reason
+
+        self.resp.encoding = "UTF-8"
+        self.body = self.resp.text
+        self.data = None
+        self._cached_status = None
+        self.parse(self.body)
+
+    def parse(self, body):
+        self.data = json.loads(self.body)
+
+    @property
+    def successful(self):
+        if self._cached_status is not None:
+            return self._cached_status
+        else:
+            failures = 0
+            devices = len(self.data)
+            status = None
+            for k in self.data:
+                if self.data[k]['success'] is False:
+                    failures += 1
+            if failures == devices:
+                status = FAILURE
+            elif failures > 0:
+                status = PARTIAL
+            else:
+                status = SUCCESS
+            self._cached_status = status
+            return status
+
+    @property
+    def failures(self):
+        for k in self.data:
+            if self.data[k]['success'] is False:
+                yield (k, self.data[k]['message'])
+
+    def _filter_by(self, device_state):
+        for k in self.data:
+            if self.data[k]['device_state'] == device_state:
+                yield k
+
+    @property
+    def created(self):
+        return self._filter_by('created')
+
+    @property
+    def existing(self):
+        return self._filter_by('existing')
+
+    @property
+    def modified(self):
+        return self._filter_by('modified')
+
+
 class DeviceResponse(Response):
     def __init__(self, resp, session, fetcher):
         super(DeviceResponse, self).__init__(resp, session)
