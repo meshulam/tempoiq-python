@@ -93,7 +93,7 @@ class WriteResponse(Response):
     def successful(self):
         if self._cached_status is not None:
             return self._cached_status
-        elif self.data is None:
+        elif not self.data:
             return False
         else:
             failures = 0
@@ -113,14 +113,14 @@ class WriteResponse(Response):
 
     @property
     def failures(self):
-        if self.data is None:
+        if not self.data:
             raise StopIteration
         for k in self.data:
             if self.data[k]['success'] is False:
                 yield (k, self.data[k]['message'])
 
     def _filter_by(self, device_state):
-        if self.data is None:
+        if not self.data:
             raise StopIteration
         for k in self.data:
             if self.data[k]['device_state'] == device_state:
