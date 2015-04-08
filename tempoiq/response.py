@@ -112,14 +112,14 @@ class WriteResponse(Response):
     @property
     def failures(self):
         if self.data is None:
-            return []
+            raise StopIteration
         for k in self.data:
             if self.data[k]['success'] is False:
                 yield (k, self.data[k]['message'])
 
     def _filter_by(self, device_state):
         if self.data is None:
-            return []
+            raise StopIteration
         for k in self.data:
             if self.data[k]['device_state'] == device_state:
                 yield k
