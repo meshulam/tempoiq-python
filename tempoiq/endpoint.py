@@ -78,7 +78,7 @@ class HTTPEndpoint(object):
         self.base_url = url + '/v2/'
 
         self.headers = {
-            'User-Agent': 'tempoiq-python/%s' % "1.0.2",
+            'User-Agent': 'tempoiq-python/%s' % "1.0.3",
             'Accept-Encoding': 'gzip'
         }
         self.auth = HTTPBasicAuth(key, secret)
