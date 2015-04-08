@@ -85,6 +85,8 @@ class WriteResponse(Response):
             self.parse(self.body)
 
     def parse(self, body):
+        if not self.body:
+            self.body = '{}'
         self.data = json.loads(self.body)
 
     @property
