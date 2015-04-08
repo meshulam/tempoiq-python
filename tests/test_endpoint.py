@@ -55,7 +55,7 @@ class TestEndpoint(unittest.TestCase):
     def test_endpoint_constructor(self):
         self.assertEquals(self.end.base_url, 'https://www.nothing.com/v2/')
         self.assertEquals(self.end.headers['User-Agent'],
-                          'tempoiq-python/%s' % '1.0.2')
+                          'tempoiq-python/%s' % '1.0.3')
         self.assertEquals(self.end.headers['Accept-Encoding'], 'gzip')
         self.assertTrue(hasattr(self.end, 'auth'))
 
@@ -63,7 +63,7 @@ class TestEndpoint(unittest.TestCase):
         self.end = p.HTTPEndpoint('http://www.nothing.com', 'foo', 'bar')
         self.assertEquals(self.end.base_url, 'http://www.nothing.com/v2/')
         self.assertEquals(self.end.headers['User-Agent'],
-                          'tempoiq-python/%s' % '1.0.2')
+                          'tempoiq-python/%s' % '1.0.3')
         self.assertEquals(self.end.headers['Accept-Encoding'], 'gzip')
         self.assertTrue(hasattr(self.end, 'auth'))
 
