@@ -24,7 +24,7 @@ tests_require = [
 
 setup(
     name="tempoiq",
-    version="1.0.1",
+    version="1.0.2",
     author="TempoIQ Inc",
     author_email="aaron.brenzel@tempoiq.com",
     url="http://github.com/tempoiq/tempoiq-python/",
