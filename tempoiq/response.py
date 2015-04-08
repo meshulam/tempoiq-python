@@ -81,7 +81,8 @@ class WriteResponse(Response):
         self.body = self.resp.text
         self.data = None
         self._cached_status = None
-        self.parse(self.body)
+        if self.status_code < 299:
+            self.parse(self.body)
 
     def parse(self, body):
         self.data = json.loads(self.body)
@@ -90,6 +91,8 @@ class WriteResponse(Response):
     def successful(self):
         if self._cached_status is not None:
             return self._cached_status
+        elif self.data is None:
+            return False
         else:
             failures = 0
             devices = len(self.data)
@@ -108,11 +111,15 @@ class WriteResponse(Response):
 
     @property
     def failures(self):
+        if self.data is None:
+            return []
         for k in self.data:
             if self.data[k]['success'] is False:
                 yield (k, self.data[k]['message'])
 
     def _filter_by(self, device_state):
+        if self.data is None:
+            return []
         for k in self.data:
             if self.data[k]['device_state'] == device_state:
                 yield k
