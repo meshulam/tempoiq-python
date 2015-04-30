@@ -10,9 +10,9 @@ from setuptools import setup
 
 
 install_requires = [
-    'python-dateutil',
-    'requests>=1.0',
-    'simplejson',
+    'python-dateutil >=2.4',
+    'requests >=2.5, !=2.6.1, !=2.6.2',
+    'simplejson >=3.6',
     'pytz',
     'sphinx'
 ]
