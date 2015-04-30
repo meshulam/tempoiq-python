@@ -3,6 +3,8 @@ from requests.auth import HTTPBasicAuth
 import urlparse
 import urllib
 
+from . import __version__
+
 
 def make_url_args(params):
     """Utility function for constructing a URL query string from a dictionary
@@ -78,7 +80,7 @@ class HTTPEndpoint(object):
         self.base_url = url + '/v2/'
 
         self.headers = {
-            'User-Agent': 'tempoiq-python/%s' % "1.0.3",
+            'User-Agent': 'tempoiq-python/%s' % __version__,
             'Accept-Encoding': 'gzip'
         }
         self.auth = HTTPBasicAuth(key, secret)

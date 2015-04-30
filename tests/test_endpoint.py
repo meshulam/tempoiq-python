@@ -1,6 +1,7 @@
 import unittest
 from monkey import monkeypatch_requests
 from tempoiq import endpoint as p
+from tempoiq import __version__
 
 
 class TestEndpoint(unittest.TestCase):
@@ -55,7 +56,7 @@ class TestEndpoint(unittest.TestCase):
     def test_endpoint_constructor(self):
         self.assertEquals(self.end.base_url, 'https://www.nothing.com/v2/')
         self.assertEquals(self.end.headers['User-Agent'],
-                          'tempoiq-python/%s' % '1.0.3')
+                          'tempoiq-python/%s' % __version__)
         self.assertEquals(self.end.headers['Accept-Encoding'], 'gzip')
         self.assertTrue(hasattr(self.end, 'auth'))
 
@@ -63,7 +64,7 @@ class TestEndpoint(unittest.TestCase):
         self.end = p.HTTPEndpoint('http://www.nothing.com', 'foo', 'bar')
         self.assertEquals(self.end.base_url, 'http://www.nothing.com/v2/')
         self.assertEquals(self.end.headers['User-Agent'],
-                          'tempoiq-python/%s' % '1.0.3')
+                          'tempoiq-python/%s' % __version__)
         self.assertEquals(self.end.headers['Accept-Encoding'], 'gzip')
         self.assertTrue(hasattr(self.end, 'auth'))
 
